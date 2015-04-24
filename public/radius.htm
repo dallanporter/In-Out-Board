@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    	<title>Radius Engineering Button Board</title>
+    	<script type="text/javascript" language="javascript" src="/js/jquery.js"></script>
+        <!-- TODO - combine messenging.js with buttonboard.js -->
+	<script type="text/javascript" language="javascript" src="/js/messaging.js"></script>
+    	<script type="text/javascript" language="javascript" src="/js/buttonboard.js"></script>
+
+    	<script language="javascript">
+
+		var buttonboard = null;
+		
+		$(function() {
+			//console.log("initializing...");
+			window.buttonboard = $("#buttonboard").ButtonBoard( 
+				{ 	
+					group:"radius",
+					token:"BYGTWtox89b8955d9de51fb1cafafcfa1b0e31b1d",
+					height:"auto",
+					show_settings: false,
+					/* logo: "https://secure.button-board.com/images/radius/logo.png" */
+					title: "Radius Engineering"
+				} 
+			);
+			//console.log("Board created.");
+		});
+		
+		
+		</script>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  
+	<style>
+		html
+		{
+			height:100%;
+		}
+		body
+		{
+			margin:0;
+			height:100%;
+			background: #1B9EE0; /* Old browsers */
+			font-family: verdana;
+		}
+		#buttonboard
+		{
+			
+			/*width:400px;*/
+			/*height:700px;*/
+			position:absolute;
+			top:60px;
+			left:40px;
+			width:80%;
+			
+			box-shadow:5px 5px 30px;
+			padding:20px;
+			border-radius:20px;
+			
+			background: #F7F7F7; 
+
+		}
+	</style> 
+    </head>
+
+    <body>
+    	<div id="buttonboard"></div>
+        
+        <div id="bb_log"></div>
+	<div>
+		Example of New Radius Non-Flash Button-Board (under construction)
+	</div>
+    </body>
+</html>

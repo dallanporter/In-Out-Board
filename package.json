@@ -1,0 +1,14 @@
+{
+    "name": "In-Out-Board",
+    "version": "0.0.1",
+    "author": "Dallan Porter <dallan@porterdigital.com>",
+    "description": "Online In & Out Board Server",
+    "dependencies": {
+        "mime": "1.2.9",
+        "mysql": "2.0.0",
+        "recaptcha": "1.2.0",
+        "express": "3.4.7",
+        "socket.io": "0.9.16",
+        "jade": "0.35.0"
+    }
+}

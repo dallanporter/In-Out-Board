@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>In & Out Board</title>
+    <script language="javascript" type="text/javascript" src="/js/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/messaging.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/buttonboard.js"></script>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css" />
+    <link href="http://fonts.googleapis.com/css?family=Terminal+Dosis:400,700" rel="stylesheet" type="text/css" />
+	<style>
+		body
+		{
+		  color:#fff;
+		  font-size:18px;
+		  font-family: 'Terminal Dosis', sans-serif;
+		  text-shadow: 0 1px 1px rgba(0,0,0,0.4);
+		  background-color:#9d9d9d;
+		}
+		
+		.container
+		{
+			width:60%;
+			max-width:800px;
+			margin-left:auto;
+			margin-right:auto;
+		}
+		
+		#buttonboard
+		{
+		  padding:10px;
+		  box-shadow: 2px 2px 15px #000000;
+		  border-radius: 8px;
+		  background-color:#fff;
+		}
+		
+
+    </style>
+  
+  <script language="javascript">
+    var buttonboard = null;
+    $(function() {
+	    window.buttonboard = $("#buttonboard").ButtonBoard( 
+	      { 	
+		      group:"testgroup",
+		      token:"token456",
+		      height:"auto",
+		      view_only: false,
+		      show_settings: false
+		      
+	      } 
+	    );
+    });
+  </script>
+</head>
+
+<body>
+	
+<a href="https://github.com/dallanporter/In-Out-Board"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+<div id="content" class="container">
+
+	<h2>Interactive In & Board</h2>
+	<p>
+		Node.js & MySQL backend. HTML5 & jQuery frontend.
+	</p>
+  
+	<div class="row">
+		<div class="span6">
+			<div>
+				<div>
+
+<!-- HTML generated using hilite.me --><div style="color:black;text-shadow: none; font-size:13px;background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #666666">&lt;</span>script language<span style="color: #666666">=</span><span style="color: #BB4444">&quot;javascript&quot;</span> type<span style="color: #666666">=</span><span style="color: #BB4444">&quot;text/javascript&quot;</span> src<span style="color: #666666">=</span><span style="color: #BB4444">&quot;/js/jquery.js&quot;</span><span style="color: #666666">&gt;&lt;</span><span style="border: 1px solid #FF0000">/script&gt;</span>
+<span style="color: #666666">&lt;</span>script language<span style="color: #666666">=</span><span style="color: #BB4444">&quot;javascript&quot;</span> type<span style="color: #666666">=</span><span style="color: #BB4444">&quot;text/javascript&quot;</span> src<span style="color: #666666">=</span><span style="color: #BB4444">&quot;/bootstrap/js/bootstrap.js&quot;</span><span style="color: #666666">&gt;&lt;</span><span style="border: 1px solid #FF0000">/script&gt;</span>
+<span style="color: #666666">&lt;</span>script type<span style="color: #666666">=</span><span style="color: #BB4444">&quot;text/javascript&quot;</span> language<span style="color: #666666">=</span><span style="color: #BB4444">&quot;javascript&quot;</span> src<span style="color: #666666">=</span><span style="color: #BB4444">&quot;/js/messaging.js&quot;</span><span style="color: #666666">&gt;&lt;</span><span style="border: 1px solid #FF0000">/script&gt;</span>
+<span style="color: #666666">&lt;</span>script type<span style="color: #666666">=</span><span style="color: #BB4444">&quot;text/javascript&quot;</span> language<span style="color: #666666">=</span><span style="color: #BB4444">&quot;javascript&quot;</span> src<span style="color: #666666">=</span><span style="color: #BB4444">&quot;/js/buttonboard.js&quot;</span><span style="color: #666666">&gt;&lt;</span><span style="border: 1px solid #FF0000">/script&gt;</span>
+	
+<span style="color: #666666">&lt;</span>div id<span style="color: #666666">=</span><span style="color: #BB4444">&quot;buttonboard&quot;</span><span style="color: #666666">&gt;&lt;</span><span style="border: 1px solid #FF0000">/div&gt; &lt;!-- The board container --&gt;</span>
+					
+<span style="color: #AA22FF; font-weight: bold">var</span> buttonboard <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">null</span>;
+$(<span style="color: #AA22FF; font-weight: bold">function</span>() {
+	<span style="color: #AA22FF">window</span>.buttonboard <span style="color: #666666">=</span> $(<span style="color: #BB4444">&quot;#buttonboard&quot;</span>).ButtonBoard( 
+	  { 	
+		  group<span style="color: #666666">:</span><span style="color: #BB4444">&quot;testgroup&quot;</span>,
+		  token<span style="color: #666666">:</span><span style="color: #BB4444">&quot;token456&quot;</span>,
+		  height<span style="color: #666666">:</span><span style="color: #BB4444">&quot;auto&quot;</span>,
+		  view_only<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">false</span>,
+		  show_settings<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">false</span>
+		  
+	  } 
+	);
+});
+</pre></td></tr></table></div>
+
+				</div>
+			</div>
+		</div>
+		<div class="span6" style="margin-top:40px;">
+			<div id="buttonboard"></div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

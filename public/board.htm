@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Button-Board.com</title>
+    <script type="text/javascript" language="javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/messaging.js"></script>
+    <script type="text/javascript" language="javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/jquery.editinplace.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" language="javascript" src="js/bb.js"></script>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Crafty+Girls' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Gochi+Hand' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Patrick+Hand+SC' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="css/fonts.css" />
+  </head>
+  <body>
+  	<div id="board_c">
+        <table cellpadding="0" cellspacing="0" id="container">
+            <thead>
+                <tr class="table_head">
+                    <th class="header_name"></th>
+                    <th class="header_sm"></th>
+                    <th class="header_sm"></th>
+                    <th class="header_sm"></th>
+                    <th class="header_sm"></th>
+                    <td class="header_sm"></td>
+                    <td class="header_sm"></td>
+                    <td class="header_sm"></td>
+                    <td class="header_sm"></td>
+                    <td class="header_sm"></td>
+                    <td class="header_sm"></td>
+                    <td class="header_sm"></td>
+                    <td class="header_sm"></td>
+                    <td class="header_sm"></td>
+                    
+                    <th class="header_remarks"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="bb_title" colspan="15">
+                        <span id="bb_title_text">In / Out Board</span>
+			<div id="bb_settings" onclick="ShowSettings()"></div>
+			  
+			</div>
+                    </td>
+                </tr>
+                <tr class="header_labels">
+                    <td id="head_name">NAME</td>
+                    <td id="head_in">IN</td>
+                    <td id="head_out">OUT</td>
+                    <td id="head_blank"></td>
+                    <td id="head_vac">VAC</td>
+                    <td colspan="9">
+                        <table cellpadding="0" border="0" cellspacing="0" id="return_table" width="100%">
+                            <div>WILL RETURN</div>
+                            <tr>
+                                <td id="head_9">9</td>
+                                <td id="head_10">10</td>
+                                <td id="head_11">11</td>
+                                <td id="head_12">12</td>
+                                <td id="head_1">1</td>
+                                <td id="head_2">2</td>
+                                <td id="head_3">3</td>
+                                <td id="head_4">4</td>
+                                <td id="head_5">5</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td id="head_remarks">REMARKS</td>
+                </tr>
+                
+                
+                <tr id="last">
+                    <td colspan="15">
+                    </td>
+                </tr>
+            <tbody>
+        </table>
+	
+	<!-- put remarks here -->
+	<div id="remark_container">
+	  
+	</div>
+	
+        <!-- put the buttons here -->
+	<div id="button_container">
+	  
+	</div>
+        
+	<div id="position_callout">
+	  TODO - show this while dragging
+	</div>
+	
+    </div>
+
+	
+</body>
+</html>

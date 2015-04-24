@@ -1,0 +1,70 @@
+.link
+{
+    cursor: pointer;
+}
+
+#settings_container
+{
+    display: none;
+}
+
+#userlist
+{
+    list-style-type: none;
+    margin:0px;
+    padding:0px;
+    width:60%;
+}
+
+#userlist li
+{
+    margin: 0 50px 3px 3px;
+    padding: 0.4em;
+    padding-left: 1.5em;
+    font-size: 10px;
+    height:18px;
+}
+
+.sort_li
+{
+    
+    position: absolute;
+    margin-left:-1.3em;
+    
+}
+
+.li_name
+{
+    margin-left:30px;
+}
+
+.phone_extension
+{
+    padding-left:12px;
+    background-image: url(/images/phone.png);
+    background-repeat: no-repeat;
+}
+
+#user_edit_form
+{
+  
+    position:absolute;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+    
+    width:275px;
+    height:300px;
+    background-color:white;
+    box-shadow: 3px 3px 10px #000000;
+
+    top:200px;
+    padding:10px 60px 5px 60px;
+}
+
+.required
+{
+    color:red;
+    font-size:10px;
+}

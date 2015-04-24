@@ -1,0 +1,15 @@
+html
+    head
+        title Button Board - Sign Up
+        script(src='js/jquery.js')
+        script(src='js/signup.js')
+    body
+        h2 Sign Up For Free
+        form(method='POST', action='.')
+            label(for='company_name') Company Name
+            input(name='company_name',type='text')
+            label(for='email') Contact Email
+            input(name='email',type='text')
+            != foobar
+            
+            input(type='submit', value='Check Recaptcha')

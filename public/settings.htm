@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>My Button Board Settings</title>
+    <script type="text/javascript" language="javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/messaging.js"></script>
+    <script type="text/javascript" language="javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/jquery.editinplace.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/jscolor.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/settings.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/smoothness/jquery-ui-1.8.21.custom.css" />
+    <link type="text/css" rel="stylesheet" href="css/settings.css" />
+    <link href='https://fonts.googleapis.com/css?family=Crafty+Girls' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Gochi+Hand' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Patrick+Hand+SC' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="css/fonts.css" />
+</head>
+
+<body>
+
+<h1>My Button Board Settings</h1>
+<div>Status: <span id="status">Not Logged In</span></div>
+<p>
+    <div id="login_container">
+        <h2>Login</h2>
+        <div>Group Name: <input id="groupname" type="text" /></div>
+        <div>Password: <input id="password" type="password" /></div>
+        <button onclick="Login()">Login</button>
+    </div>
+
+    
+    <div id="settings_container">
+        <hr>
+        <p>
+            <h2>Board Font</h2>
+            <div>
+                <div><input type="radio" name="font" value="font1" checked=checked /> <span class="font1">Grumpy wizards make toxic brew for the evil Queen and Jack. 1234567890</span></div>
+                <div><input type="radio" name="font" value="font2" /> <span class="font2">Grumpy wizards make toxic brew for the evil Queen and Jack. 1234567890</span></div>
+                <div><input type="radio" name="font" value="font3" /> <span class="font3">Grumpy wizards make toxic brew for the evil Queen and Jack. 1234567890</span></div>
+                <div><input type="radio" name="font" value="font4" /> <span class="font4">Grumpy wizards make toxic brew for the evil Queen and Jack. 1234567890</span></div>
+                <div><input type="radio" name="font" value="font5" /> <span class="font5">Grumpy wizards make toxic brew for the evil Queen and Jack. 1234567890</span></div>
+            </div>
+            <div><button onclick="SaveFont( )">Save</button></div>
+        </p>
+
+        <p>
+            <h2>Add New Board Entry</h2>
+            <div>Name: <input id="newname" type="text" /></div>
+            <div>Email: <input id="newemail" type="text" /> (optional)</div>
+            <div>Phone Extension: <input id="newext" type="text" /> (optional)</div>
+            <div><button onclick="AddUser()">Create User</button></div>
+        </p>
+        <p>
+            <h2>Button Board Names</h2>
+            <div>(drag and drop items in the list below to change the name sorting)</div>
+            <ul id="userlist">
+                <li class="ui-state-default">user color:<input type="text" class="color" /> <a href="#" onclick="EditUser(0)">[edit]</a><a href="#" onclick="DeleteUser(0)">[delete]</a></li>
+            </ul>
+        </p>
+    </div>
+</p>
+
+<div id="user_edit_form">
+    <h2>Edit User</h2>
+    <p>
+        <div>Name: <input type="text" id="edit_name" name="name" value="name" /> <span class="required">*</span></div>
+        <div>Email: <input type="text" id="edit_email" name="email" value="email@address.com" /></div>
+        <div>Phone Ext: <input type="text" id="edit_extension" name="extension" value="123" size="10" maxlength="10" /></div>
+        <div>
+            <button onclick="EditUser()">Save User</button>
+        </div>
+        <div style="padding-top:20px;"><span class="required">* Required</span></div>
+    </p>
+</div>
+
+</body>
+</html>
