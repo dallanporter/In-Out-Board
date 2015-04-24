@@ -42,7 +42,7 @@ var server = "http://localhost"; // change to your server url
 var server_port = 8080; // change to your server port
 ```
 
-This project needs a lot of work obviously. But it's functional and serval organizations and businesses have
+This project needs a lot of work obviously. But it's functional and several organizations and businesses have
 been using it regularly.
 
 hit me up if you have any questions.
