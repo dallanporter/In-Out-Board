@@ -6,7 +6,7 @@
     <script type="text/javascript" language="javascript" src="/js/jquery.js"></script>
     <script type="text/javascript" language="javascript" src="/js/jquery-ui.min.js"></script>
     <script type="text/javascript" language="javascript" src="/js/messaging.js"></script>
-    <script type="text/javascript" language="javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" language="javascript" src="https://secure.button-board.com/socket.io/socket.io.js"></script>
     <script type="text/javascript" language="javascript" src="/js/jquery.editinplace.js"></script>
     <script type="text/javascript" language="javascript" src="/js/jscolor.js"></script>
     <script type="text/javascript" language="javascript" src="/js/settings.js"></script>
@@ -30,7 +30,7 @@
         <button onclick="Login()">Login</button>
     </div>
 
-    
+
     <div id="settings_container">
         <hr>
         <p>
@@ -46,6 +46,15 @@
         </p>
 
         <p>
+            <h2>Board Title / Message</h2>
+            <div>
+                <label>Title</label>
+                <input type="text" value="" id="title">
+                <div><button onclick="SaveTitle();">Save Title</button></div>
+            </div>
+        </p>
+
+        <p>
             <h2>Add New Board Entry</h2>
             <div>Name: <input id="newname" type="text" /></div>
             <div>Email: <input id="newemail" type="text" /> (optional)</div>
@@ -55,6 +64,7 @@
         <p>
             <h2>Button Board Names</h2>
             <div>(drag and drop items in the list below to change the name sorting)</div>
+	    <div>!! Use Google Chrome for easy color picker feature !!</div>
             <ul id="userlist">
                 <li class="ui-state-default">user color:<input type="text" class="color" /> <a href="#" onclick="EditUser(0)">[edit]</a><a href="#" onclick="DeleteUser(0)">[delete]</a></li>
             </ul>
@@ -70,6 +80,7 @@
         <div>Phone Ext: <input type="text" id="edit_extension" name="extension" value="123" size="10" maxlength="10" /></div>
         <div>
             <button onclick="EditUser()">Save User</button>
+	    <button onclick="CancelEditUser()">Cancel</button>
         </div>
         <div style="padding-top:20px;"><span class="required">* Required</span></div>
     </p>

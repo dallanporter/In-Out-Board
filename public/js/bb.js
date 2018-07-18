@@ -1,6 +1,5 @@
 
-var server = "http://localhost";
-var server_port = 8080;
+
 // NOTE - The iFrame script
 
 // Make console.log available
@@ -28,12 +27,11 @@ var QueryStringToHash = function QueryStringToHash  (query) {
 		} else {
 			query_string[pair[0]].push(pair[1]);
 		}
-	} 
+	}
 	return query_string;
 };
 
-/*
-var socket = io.connect(server,
+var socket = io.connect("http://secure.button-board.com",
 			{
 				secure:true,
 				reconnect:true,
@@ -42,18 +40,6 @@ var socket = io.connect(server,
 				'max reconnect attempts': 10000
 			}
 		);
-*/
-var socket = io.connect(server,
-			{
-				secure:false,
-				reconnect:true,
-				"reconnection delay":5000,
-				port: server_port,
-				'max reconnect attempts': 10000
-			}
-		);
-
-
 var positions = {};
 var button_size = 30;
 var board_size = "medlarge";
@@ -100,6 +86,16 @@ socket.on( 'set_remark', function( data ) {
 	SetRemark( id, new_remark );
 });
 
+socket.on("set_title", function(data) {
+    console.log("Setting board title to " + data.title);
+    $("#bb_title_text").html(data.title);
+});
+
+socket.on("style_title", function(data) {
+    console.log("Setting board title style to be " + data.css);
+    $("#bb_title_text").css(data.css);
+});
+
 
 socket.on( 'change_color', function( data ) {
 	console.log("Changing color for user: " + data.userid + " -> " + data.color );
@@ -110,7 +106,7 @@ socket.on( 'change_color', function( data ) {
 
 socket.on( 'init', function( data ) {
 	/* Handle init message. This will be an object containing the entire board
-	[	
+	[
 		{
 			id:<userid:Int>,
 			name:<username:String>,
@@ -124,9 +120,12 @@ socket.on( 'init', function( data ) {
 	var group = data.group;
 	font = data.group.font;
 	ClearBoard(); // clear it first in case we're re-initializing
-	
+
 	var group_id = group.id;
 	var group_name = group.name;
+    if (group.title) {
+        $("#bb_title_text").html(group.title);
+    }
 	/*
 	if ( bb_view_only )
 	{
@@ -151,16 +150,19 @@ socket.on( 'init', function( data ) {
 		ResizeBoard();
 		ResizeButtons(); // normally gets called by ResizeBoard, but do exta call one time here
 		NotifyParentSizeChanged();
-		
+
+        if (group.title) {
+            $("#bb_title_text").html(group.title);
+        }
 	}
-	
-	
+
+
 	do_reconnect = true; // set flag to reconnect on socket loss
 });
 
 socket.on( 'reinit', function( group ) {
 	/* Handle init message. This will be an object containing the entire board
-	[	
+	[
 		{
 			id:<userid:Int>,
 			name:<username:String>,
@@ -170,12 +172,15 @@ socket.on( 'reinit', function( group ) {
 		...
 	]
 	*/
-	
-	
+
+
 	ClearBoard(); // clear it first in case we're re-initializing
 	bb_users = {}; // reset the object holding all users
 	var group_id = group.id;
 	var group_name = group.name;
+    if (group.title) {
+        $("#bb_title_text").html(group.title);
+    }
 	font = group.font;
 	/*
 	if ( bb_view_only )
@@ -193,7 +198,7 @@ socket.on( 'reinit', function( group ) {
 	{
 		for(var i=0; i<board.length; i++)
 		{
-			
+
 			AddPersonToBoard( board[i] );
 		}
 		// Add a blank row at the bottom
@@ -202,9 +207,9 @@ socket.on( 'reinit', function( group ) {
 		ResizeBoard();
 		ResizeButtons(); // normally gets called by ResizeBoard, but do exta call one time here
 		NotifyParentSizeChanged();
-		
+
 	}
-	
+
 	do_reconnect = true; // set flag to reconnect on socket loss
 });
 
@@ -219,15 +224,15 @@ $(function() {
 	window.onresize = function( e )
 	{
 		// Handle the page resizing here
-		
+
 		// Rebuild the position lookup table
 		ResizeBoard();
 	}
 	$.receiveMessage( function(msg) {
 		// NOTE - this is the IFRAME WINDOW (the board)
-		
-		
-		
+
+
+
 		var decoded = QueryStringToHash( msg.data );
 		console.log("Received message from parent: " + decoded.message );
 		switch ( decoded.message )
@@ -258,37 +263,40 @@ $(function() {
 				{
 					bb_view_only = false;
 				}
-				try
-				{
-					if( decoded["opts[logo]"] && decoded["opts[logo]"] != "" )
-					{
-						console.log("Try setting the logo to " + decoded["opts[logo]"] );
-						var url = decoded["opts[logo]"];
-						//$("#bb_title_text").empty(); // remove any text
-						$("#bb_title_text").html("<img src=\"" + url + "\" />" );
-					}
-					else if( decoded["opts[title]"] )
-					{
-						var title = decoded["opts[title]"];
-						$("#bb_title_text").html( title );
-					}
-				}
-				catch( ex )
-				{
-					console.log("Caught exception accessing options");
-				}
+
+                if (!group.title) {
+                    try
+                    {
+                        if( decoded["opts[logo]"] && decoded["opts[logo]"] != "" )
+                        {
+                            console.log("Try setting the logo to " + decoded["opts[logo]"] );
+                            var url = decoded["opts[logo]"];
+                            //$("#bb_title_text").empty(); // remove any text
+                            $("#bb_title_text").html("<img src=\"" + url + "\" />" );
+                        }
+                        else if( decoded["opts[title]"] )
+                        {
+                            var title = decoded["opts[title]"];
+                            $("#bb_title_text").html( title );
+                        }
+                    }
+                    catch( ex )
+                    {
+                        console.log("Caught exception accessing options");
+                    }
+                }
 				socket.json.emit("init", { group: decoded.group, token: decoded.token } );
-				
+
 				break;
 			default:
 				console.log("Unhandled message from parent window.");
 				break;
 		}
-		
+
 	});
-	
+
 	SendParentMessage( { message:'board_ready' } );
-	
+
 });
 
 function TableResized()
@@ -303,8 +311,8 @@ function SendParentMessage( param )
 	try
 	{
 		var url = (window.location != window.parent.location) ? document.referrer: document.location;
-		
-		$.postMessage( param, url, parent ); // tell the parent frame the size changed	
+
+		$.postMessage( param, url, parent ); // tell the parent frame the size changed
 	}
 	catch( ex )
 	{
@@ -327,14 +335,14 @@ function ResizeBoard()
 	$(".remark_cell").removeClass("font_size_medlarge");
 	$(".remark_cell").removeClass("font_size_large");
 	$(".remark_cell").removeClass("font_size_giant");
-	
+
 	var fontname = font;
 	if( fontname != null )
 	{
 		$(".remark_cell").addClass( fontname );
 		$(".user_row").addClass( fontname );
 	}
-	
+
 	if( new_width < 350 )
 	{
 		// Tiny
@@ -342,7 +350,7 @@ function ResizeBoard()
 		board_size = "tiny";
 		$(".user_row").addClass("font_size_tiny");
 		$(".remark_cell").addClass("font_size_tiny");
-		
+
 	}
 	else if( new_width < 475 )
 	{
@@ -375,10 +383,10 @@ function ResizeBoard()
 		$(".user_row").addClass("font_size_giant");
 		$(".remark_cell").addClass("font_size_giant");
 	}
-	
+
 	//console.log("Setting board size to: " + board_size );
-	
-	// the new width = 
+
+	// the new width =
 	BuildPositionLookupTable();
 	if( prev_size != button_size )
 	{
@@ -386,11 +394,11 @@ function ResizeBoard()
 
 		NotifyParentSizeChanged(); // tell parent to resize the be iframe
 	}
-	
-	
+
+
 	RepositionButtons();
 	RepositionRemarks();
-	
+
 	if ( bb_show_settings == "false" )
 	{
 		$("#bb_settings").hide();
@@ -399,8 +407,8 @@ function ResizeBoard()
 	{
 		$("#bb_settings").show();
 	}
-	
-	
+
+
 }
 
 function RepositionButtons()
@@ -471,8 +479,8 @@ function InitBoard()
 	});
 	*/
 	ResizeBoard(); // intial resize setup
-	
-	
+
+
 }
 
 function ClearBoard()
@@ -487,7 +495,7 @@ function ClearBoard()
 			user.remark_container.remove();
 		}
 	}
-	
+
 	$("#bb_extrarow").remove();
 }
 
@@ -535,7 +543,7 @@ function GetButtonPosition( xcoord )
 	else if( xcoord < positions.pos_vac )
 	{
 		c = "blank";
-		
+
 	}
 	else if( xcoord < positions.pos_9 )
 	{
@@ -713,21 +721,21 @@ function CalculateButtonPosition( pos )
 			xpos = positions.pos_remarks;
 			break;
 	}
-	
+
 	// TODO - figure out the offset for the percent
 	var cell_width = GetCellWidth( pos.c );
-	
+
 	return xpos + (cell_width * pos.cp/100.0);
 }
 
 function OnButtonDragged( a, b )
 {
-	
+
 }
 
 function AcceptRemarks()
 {
-	$("#remark_editor").hide();	
+	$("#remark_editor").hide();
 }
 
 function CancelRemarks()
@@ -790,7 +798,7 @@ function AddBlankRow()
         str += "<td class=\"remark\"></td>";
         str += "</tr>";
 	var tr = $(str);
-	$("#container > tbody:last").append( str );	
+	$("#container > tbody:last").append( str );
 }
 
 function AddPersonToBoard( data )
@@ -807,7 +815,7 @@ function AddPersonToBoard( data )
 	{
 		ext_string = "<span class=\"phone_extension\">" + data.extension + "</span>";
 	}
-	
+
 	var str = "<tr id=\"row_" + data.id + "\" class=\"user_row\">";
         str += "<td class=\"name\">" + data.name + " " + ext_string + "</td>";
         str += "<td class=\"sm\"></td>";
@@ -827,19 +835,19 @@ function AddPersonToBoard( data )
         str += "</tr>";
 	var tr = $(str);
 	$("#container > tbody:last").append( str );
-	
+
 	var row = $("#row_" + data.id );
 	var y = row[0].offsetTop;
-	
+
 	var str = "<div id=\"button_" + data.id + "\" style=\"top:" + y + "px;left:30px;\" class=\"button\"></div>";
 	$("#button_container").append( str );
-	
-	
-	
+
+
+
 	str = "<div id=\"remark_" + data.id + "\" class=\"remark remark_cell\" style=\"top:" + y + "px;right:0px;\">" + data.remark + "</div>";
 	$("#remark_container").append( str );
-	
-	
+
+
 	if ( !bb_view_only )
 	{
 		$("#remark_" + data.id ).editInPlace( { callback:
@@ -850,9 +858,9 @@ function AddPersonToBoard( data )
 				msg.remark = newtext;
 				socket.json.emit("set_remark", msg );
 				return newtext;
-			}, show_buttons: false, bg_over: "transparent" } );	
+			}, show_buttons: false, bg_over: "transparent" } );
 	}
-	
+
 	var u = {};
 	u.name = data.name;
 	u.id = data.id;
@@ -868,10 +876,10 @@ function AddPersonToBoard( data )
 	u.row = row;
 	bb_users['user_' + u.id ] = u; // store the user
 	u.remark_container = $("#remark_" + u.id ); // store the remark container
-	
+
 	if ( !bb_view_only )
 	{
-		
+
 		$("#button_" + u.id ).draggable( {
 			stop: function(event, ui ) {
 				var b = $("#button_" + u.id );
@@ -887,19 +895,19 @@ function AddPersonToBoard( data )
 				{
 					$(this).animate({"top":ui.originalPosition.top}, 1000, 'easeInOutQuad' );
 				}
-				StopDragging( event, ui ); 
+				StopDragging( event, ui );
 			},
 			start: StartDragging,
 			drag: DragMovement,
 			containment: $("#container")
 		});
 		$("#button_" + data.id ).addClass("use_pointer");
-		
+
 	}
-	
+
 	row.css("color", u.color ); // set the color
 	u.remark_container.css("color", u.color );
-	
+
 }
 
 function StartDragging( event, ui )
@@ -909,7 +917,7 @@ function StartDragging( event, ui )
 	var left = ui.offset.left;
 	$("#position_callout").show();
 
-	
+
 }
 
 function StopDragging( event, ui )
@@ -936,7 +944,7 @@ function NotifyParentSizeChanged()
 		var msg = {};
 		msg.message = "board_changed";
 		msg.data = $("#board_c").height();
-		$.postMessage( msg, url, parent ); // tell the parent frame the size changed	
+		$.postMessage( msg, url, parent ); // tell the parent frame the size changed
 	}
 	catch( ex )
 	{
@@ -946,14 +954,5 @@ function NotifyParentSizeChanged()
 
 function ShowSettings()
 {
-	var tmp = server;
-	if ( location.protocol == "https:" && server_port != 443 )
-	{
-		tmp = tmp + ":" + server_port;
-	}
-	else if( server_port != 80 )
-	{
-		tmp = tmp + ":" + server_port;
-	}
-	window.open( tmp + "/settings.htm", "_blank" );
+	window.open("https://secure.button-board.com/settings.htm", "_blank" );
 }

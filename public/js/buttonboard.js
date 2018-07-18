@@ -1,6 +1,5 @@
 
-var server = "http://localhost";
-var server_port = 8080;
+
 // NOTE - The parent window script
 
 // Make console.log available
@@ -58,23 +57,13 @@ var QueryStringToHash = function QueryStringToHash  (query) {
 		this.iframe.appendTo( this );
 		if ( location.protocol == "https:" )
 		{
-			var tmp = server;
-			if( server_port != 443 )
-			{
-				tmp += ":" + server_port;
-			}
-			this.src = tmp + "/board.htm";
-			this.iframe.attr("src", tmp + "/board.htm");
+			this.src = "https://secure.button-board.com/board.htm";
+			this.iframe.attr("src", "https://secure.button-board.com/board.htm");
 		}
 		else
 		{
-			var tmp = server;
-			if( server_port != 80 )
-			{
-				tmp += ":" + server_port;
-			}
-			this.src = tmp + "/board.htm";
-			this.iframe.attr("src", tmp + "/board.htm");			
+			this.src = "http://secure.button-board.com/board.htm";
+			this.iframe.attr("src", "http://secure.button-board.com/board.htm");			
 		}
 
 		//iframe.attr("height", "100%");

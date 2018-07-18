@@ -1,1 +1,7 @@
-
+password.json
+node_modules*
+node-ButtonBoard*
+public/boards*
+public/bootstrap*
+public/fonts/
+#*
