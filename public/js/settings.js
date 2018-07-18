@@ -157,7 +157,7 @@ function SortChange( event, ui )
                 pos++;
                 out.sort[ el.id ] = pos;
         });
-        
+
         socket.json.emit( "admin_sort_list", out );
 }
 
@@ -169,6 +169,15 @@ function SaveTitle() {
     };
     socket.json.emit("admin_set_title", msg);
 
+}
+
+function SaveAlert() {
+    var alert = $("#alert").val();
+    var msg = {
+        alert: $.trim(alert),
+        groupname: groupname,
+    };
+    socket.json.emit("admin_set_alert", msg);
 }
 
 function SaveFont(  )

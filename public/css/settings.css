@@ -27,10 +27,10 @@
 
 .sort_li
 {
-    
+
     position: absolute;
     margin-left:-1.3em;
-    
+
 }
 
 .li_name
@@ -47,13 +47,13 @@
 
 #user_edit_form
 {
-  
+
     position:absolute;
     left:0;
     right:0;
     margin-left:auto;
     margin-right:auto;
-    
+
     width:275px;
     height:300px;
     background-color:white;
@@ -67,4 +67,9 @@
 {
     color:red;
     font-size:10px;
+}
+
+#alert {
+    width:400px;
+    height:40px;
 }

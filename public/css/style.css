@@ -39,7 +39,7 @@ body
 	cursor: pointer;
 	background-image:url(/images/settings.png);
 	float:right;
-	
+
 }
 
 #bb_title
@@ -101,7 +101,7 @@ td
 {
 	border-right:#000000 solid thin;
 	padding:0px;
-	
+
 }
 
 #legend_table td
@@ -146,13 +146,13 @@ td
 	/* direction:rtl; -- webkit doesnt do this as expected for us*/
 	/* overflow:hidden; */
 	white-space:nowrap;
-	
+
 }
 
 .font_size_tiny
 {
 
-	
+
 	/* font-family: 'Gochi Hand', cursive; */
 	font-size:7px;
 	height:10px;
@@ -248,7 +248,7 @@ td
 {
 	/* min-width:30px; */
 	/* min-width:10px; */
-	
+
 }
 
 #last
@@ -278,7 +278,7 @@ td
 }
 #remark_input
 {
-	
+
 	margin-left:5px;
 	margin-top:4px;
 	width:85%;
@@ -300,7 +300,7 @@ td
 	width:30px;
 	height:30px;
 	background-image:url(../images/buttons/default/medlarge.png);
-	
+
 	/* background-color:orange; */
 }
 
@@ -338,5 +338,18 @@ td
     webkit-border-radius:6px;
     border-radius:6px;
     padding-right:4px;
-    
+
+}
+
+#alert_notification {
+    display:none;
+}
+
+#alert_notification td.alert_text {
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    ont-weight: normal;
+    color: red;
+    text-align: center;
+    font-size: 10pt;
+    padding: 2px 0 2px 0;
 }

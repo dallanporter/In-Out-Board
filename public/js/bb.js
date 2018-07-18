@@ -79,6 +79,20 @@ socket.on( 'connect', function() {
 	}
 });
 
+socket.on("set_alert", function(data) {
+    console.log("set_alert", data);
+    if (data.alert !== null && data.alert !== "") {
+        $("#alert_notification td.alert_text").html(data.alert);
+        $("#alert_notification").show();
+    } else {
+        $("#alert_notification").hide();
+        $("#alert_notification td.alert_text").html("");
+    }
+    ResizeBoard();
+    ResizeButtons();
+    NotifyParentSizeChanged();
+});
+
 socket.on( 'set_remark', function( data ) {
 	console.log("socket.io set remark now!");
 	var id = data.id;
@@ -147,13 +161,23 @@ socket.on( 'init', function( data ) {
 		// Add a blank row at the bottom
 		AddBlankRow();
 		console.log("Sending parent a message");
-		ResizeBoard();
-		ResizeButtons(); // normally gets called by ResizeBoard, but do exta call one time here
-		NotifyParentSizeChanged();
+
 
         if (group.title) {
             $("#bb_title_text").html(group.title);
         }
+        if (group.alert) {
+            if (group.alert !== "") {
+                $("#alert_notification td.alert_text").html(group.alert);
+                $("#alert_notification").show();
+            } else {
+                $("#alert_notification").hide();
+            }
+        }
+
+        ResizeBoard();
+		ResizeButtons(); // normally gets called by ResizeBoard, but do exta call one time here
+		NotifyParentSizeChanged();
 	}
 
 
@@ -204,7 +228,21 @@ socket.on( 'reinit', function( group ) {
 		// Add a blank row at the bottom
 		AddBlankRow();
 		console.log("Sending parent a message");
-		ResizeBoard();
+
+
+        if (group.title) {
+            $("#bb_title_text").html(group.title);
+        }
+        if (group.alert) {
+            if (group.alert !== "") {
+                $("#alert_notification td.alert_text").html(group.alert);
+                $("#alert_notification").show();
+            } else {
+                $("#alert_notification").hide();
+            }
+        }
+
+        ResizeBoard();
 		ResizeButtons(); // normally gets called by ResizeBoard, but do exta call one time here
 		NotifyParentSizeChanged();
 
