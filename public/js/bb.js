@@ -544,7 +544,7 @@ function BuildPositionLookupTable()
 	positions.pos_name = $("#head_name").offset().left;
 	positions.pos_in = $("#head_in").offset().left;
 	positions.pos_out = $("#head_out").offset().left;
-	positions.pos_blank = $("#head_blank").offset().left;
+	positions.pos_remote = $("#head_remote").offset().left;
 	positions.pos_vac = $("#head_vac").offset().left;
 	positions.pos_9 = $("#head_9").offset().left;
 	positions.pos_10 = $("#head_10").offset().left;
@@ -570,18 +570,19 @@ function GetButtonPosition( xcoord )
 	{
 		c = "name";
 	}
-	else if( xcoord <  positions.pos_out )
+    else if( xcoord <  positions.pos_remote )
 	{
 		c = "in";
 	}
-	else if( xcoord <  positions.pos_blank )
+	else if( xcoord <  positions.pos_out )
 	{
-		c = "out";
+		c = "remote";
 	}
+	
 	else if( xcoord < positions.pos_vac )
 	{
-		c = "blank";
-
+		//c = "blank";
+        c = "out";
 	}
 	else if( xcoord < positions.pos_9 )
 	{
@@ -647,13 +648,19 @@ function GetCellWidth( whichone )
 			result = positions.pos_in - positions.pos_name;
 			break;
 		case "in":
-			result = positions.pos_out - positions.pos_in;
+			//result = positions.pos_out - positions.pos_in;
+            result = positions.pos_remote - positions.pos_in;
 			break;
 		case "out":
-			result = positions.pos_blank - positions.pos_out;
+			//result = positions.pos_blank - positions.pos_out;
+            result = positions.pos_vac - positions.pos_out;
 			break;
+        case "remote":
+            result = positions.pos_out - positions.pos_remote;
+            break;
 		case "blank":
-			result = positions.pos_vac - positions.pos_blank;
+			//result = positions.pos_vac - positions.pos_blank; // not using blank anymore
+            result = positions.pos_remote - positions.pos_remote;
 			break;
 		case "vac":
 			result = positions.pos_9 - positions.pos_vac;
@@ -722,8 +729,12 @@ function CalculateButtonPosition( pos )
 			xpos = positions.pos_out;
 			break;
 		case "blank":
-			xpos = positions.pos_blank;
+			//xpos = positions.pos_blank;
+            xpos = positions.pos_remote; // not using blank anymore
 			break;
+        case "remote":
+            xpos = positions.pos_remote;
+            break;
 		case "vac":
 			xpos = positions.pos_vac;
 			break;
@@ -943,6 +954,9 @@ function AddPersonToBoard( data )
 
 	}
 
+    $("#button_" + data.id).on("mouseover", ButtonMouseOver);
+    $("#button_" + data.id).on("mouseout", ButtonMouseOut);
+    
 	row.css("color", u.color ); // set the color
 	u.remark_container.css("color", u.color );
 
@@ -958,6 +972,20 @@ function StartDragging( event, ui )
 
 }
 
+function ButtonMouseOver(event) {
+	var top = event.currentTarget.offsetTop - 20;
+	var left = event.currentTarget.offsetLeft - 10;
+	//$("#position_callout").offset( { top: top, left: left } );
+    $("#position_callout").css("top", top + "px").css("left", left + "px");
+	var pos = GetButtonPosition(left  + (button_size));
+	$("#position_callout").text(pos.c);
+    $("#position_callout").show();
+}
+
+function ButtonMouseOut(event) {
+    $("#position_callout").hide();
+}
+
 function StopDragging( event, ui )
 {
 	//console.log("Stop dragging");
@@ -967,7 +995,7 @@ function StopDragging( event, ui )
 function DragMovement( event, ui )
 {
 	//console.log("drag");
-	var top = ui.offset.top - 35;
+	var top = ui.offset.top - 20;
 	var left = ui.offset.left - 10;
 	$("#position_callout").offset( { top: top, left: left } );
 	var pos = GetButtonPosition( left  + (button_size) );

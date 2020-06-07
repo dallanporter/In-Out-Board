@@ -81,6 +81,7 @@ socket.on( "admin_login_success", function( data ) {
     // build the table list now
 
     $("#title").val( data.title );
+    $("#alert").val(data.alert);
 
     users = {};
     for( var i=0; i<data.users.length; i++  )

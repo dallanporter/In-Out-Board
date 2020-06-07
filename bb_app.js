@@ -166,40 +166,7 @@ io.sockets.on("connection", function( socket ) {
 		socket.broadcast.to( socket.room ).emit( 'button_moved', data ); // send to everyone *except* the sender
 	});
 
-    socket.on("admin_set_alert", function(data) {
-        console.log("Setting board alert to " + data.message);
-        var msg = "NULL";
-        if (data.message != null && data.message != "") {
-            msg = mysql.escape(data.message);
-        }
-        var sql = "UPDATE groups SET alert = " + msg + " WHERE id = " + socket.groupid;
-        console.log(sql);
-        UpdateDatabase(sql);
 
-        var g = groups[socket.groupname];
-        if (g) {
-            g.alert = data.alert;
-        }
-        socket.broadcast.to(socket.room).emit("set_alert", data);
-    });
-
-    socket.on("admin_set_title", function(data) {
-        console.log("Setting board title to " + data.title);
-        var sql = "UPDATE groups SET title = " + mysql.escape(data.title) + " WHERE id = " + socket.groupid;
-        console.log(sql);
-        UpdateDatabase(sql);
-
-        var g = groups[socket.groupname];
-        if (g) {
-            g.title = data.title;
-        }
-        socket.broadcast.to(socket.room).emit("set_title", data);
-    });
-
-    socket.on("admin_style_title", function(data) {
-        console.log("Setting board title style to " + data.css);
-        socket.broadcast.to(socket.room).emit("style_title", data);
-    });
 
     socket.on("set_remark", function( data ) {
 
@@ -701,6 +668,48 @@ io.sockets.on("connection", function( socket ) {
 		}
 	});
 
+    socket.on("admin_set_alert", function(data) {
+        console.log("Setting board alert to " + data.alert);
+        var msg = "NULL";
+        if (data.alert!= null && data.alert != "") {
+            msg = mysql.escape(data.alert);
+        }
+        var sql = "UPDATE groups SET alert = " + msg + " WHERE id = " + socket.groupid;
+        console.log(sql);
+        UpdateDatabase(sql);
+
+        var g = groups[socket.groupname];
+        if (g) {
+            g.alert = data.alert;
+            SendMessageToGroup( data.groupname, "reinit", g );
+        }
+        //socket.broadcast.to(socket.room).emit("set_alert", data);
+
+    });
+
+    socket.on("admin_set_title", function(data) {
+        console.log("Setting board title to " + data.title);
+        var sql = "UPDATE groups SET title = " + mysql.escape(data.title) + " WHERE id = " + socket.groupid;
+        console.log(sql);
+        UpdateDatabase(sql);
+
+        var g = groups[socket.groupname];
+        if (g) {
+            g.title = data.title;
+            SendMessageToGroup( data.groupname, "reinit", g );
+        }
+        //socket.broadcast.to(socket.room).emit("set_title", data);
+
+    });
+
+    socket.on("admin_style_title", function(data) {
+        console.log("Setting board title style to " + data.css);
+        var g = groups[socket.groupname];
+        if (g) {
+            SendMessageToGroup( data.groupname, "reinit", g);
+        }
+    });
+
 	socket.on("admin_login", function( data ) {
 		console.log("Received admin_login => " + data.groupname );
 		// data->groupname
@@ -770,6 +779,7 @@ io.sockets.on("connection", function( socket ) {
 			group.id = groupid;
 			group.name = rows[0].name;
 			group.title = rows[0].title;
+            group.alert = rows[0].alert;
 			group.users = [];
 			group.password = rows[0].password;
 			group.readwrite_token = rows[0].readwrite_token;

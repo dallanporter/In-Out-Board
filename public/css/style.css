@@ -61,10 +61,19 @@ body
 .header_labels
 {
 	font-family:Verdana, Arial, Helvetica, sans-serif;
-	font-size:8px;
+	font-size:7px;
 	font-weight:bold;
 	text-align:center;
 }
+.header_labels .status_head {
+    padding-top:8px;
+}
+#head_remote {
+    background-image:url(../images/home_icon.png);
+    background-repeat:no-repeat;
+    background-size:100%;
+}
+
 tr
 {
 	border-bottom:#000000 solid thin;
@@ -353,3 +362,23 @@ td
     font-size: 10pt;
     padding: 2px 0 2px 0;
 }
+
+
+
+@media only screen and (min-width: 600px) {
+    #head_remote {
+        background-size:80%;
+        background-position:top center;
+
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    #head_remote {
+        background-size:auto 50%;
+        background-position:top center;
+
+    }
+}
+
+
